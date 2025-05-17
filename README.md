@@ -1,6 +1,6 @@
 # JS-Stadium
 
-A Python implementation of a backtracking algorithm for optimizing item selection based on budget constraints and weight maximization.
+A Python implementation of a knapsack algorithm for optimizing item selection in games based on budget constraints and weight maximization.
 
 ## Project Overview
 
@@ -10,9 +10,14 @@ This project implements a solution to the knapsack problem variant, where:
 - Each item has a price and weight value
 - There's a maximum limit of 10 items in the inventory
 
+The system is designed to process game item data from a JSON file and find the optimal combinations of items for different budget scenarios.
+
 ## Features
 
-- **Backtracking Algorithm**: Efficiently finds optimal combinations
+- **Knapsack Algorithm**: Efficiently finds optimal combinations using backtracking
+- **JSON Data Processing**: Loads item data from structured JSON files
+- **Multiple Test Cases**: Runs optimization for various budget scenarios
+- **Performance Measurement**: Tracks execution time for algorithm evaluation
 - **Early Pruning**: Avoids exploring combinations that exceed budget
 - **Efficiency Sorting**: Items are sorted by weight-to-price ratio to improve performance
 - **Type Annotations**: Comprehensive type hints for better code understanding
@@ -20,46 +25,69 @@ This project implements a solution to the knapsack problem variant, where:
 
 ## Implementation Details
 
-The core algorithm is implemented in Python and follows these steps:
-1. Convert items to a sorted list based on efficiency (weight-to-price ratio)
-2. Explore combinations recursively using backtracking
-3. Track the best combination found
-4. Return the optimal solution when all possibilities are explored
+The core algorithm implementation follows these steps:
+1. Load item data from a JSON file
+2. Parse the data into a format suitable for processing
+3. For each test budget:
+   - Sort items by efficiency (weight-to-price ratio)
+   - Use backtracking to explore combinations
+   - Find the combination that maximizes weight within budget
+   - Measure and report performance
 
-## Usage
+## Example Usage
+
+The main function in `backtracking_algorithm.py` demonstrates how to use the algorithm:
 
 ```python
-from backtracking_algorithm import Item, _find_optimal_items_backtrack
+def main():
+    # Load items from JSON file
+    with open('items.json', 'r') as f:
+        items = json.load(f)
+    items = items['items']
+    items_list = []
+    for key in items.keys():
+        items_list.append((key, items[key]['Price'], items[key]['Total Weight']))
+    
+    # Run test cases with different budgets
+    cases = [9675, 13750, 18888, 27840]
+    for case in cases:
+        start_time = time.time()
+        out = knapsack(case, items_list)[1]
+        end_time = time.time()
+        print(out)
+        print(f"Time taken: {end_time - start_time} seconds\nBudget: {case}")
+```
 
-# Define items with price and weight
-items = {
-    "item1": Item(price=10, total_weight=30.0),
-    "item2": Item(price=20, total_weight=70.0),
-    "item3": Item(price=30, total_weight=50.0),
-    "item4": Item(price=40, total_weight=60.0)
+## Data Format
+
+The algorithm expects item data in the following JSON format:
+
+```json
+{
+  "items": {
+    "Item Name": {
+      "Price": 1000,
+      "Total Weight": 14.14,
+      "Other attributes": "values"
+    },
+    ...
+  }
 }
-
-# Set budget constraint
-budget = 50
-
-# Find optimal items
-best_items, total_price, total_weight = _find_optimal_items_backtrack(budget, items)
-
-print(f"Best items: {best_items}")
-print(f"Total price: {total_price}")
-print(f"Total weight: {total_weight}")
 ```
 
 ## Future Enhancements
 
-- Unit tests for algorithm verification
-- Performance benchmarking capabilities
-- Alternative optimization algorithms
+- Improved output format showing all selected items
+- Error handling for file loading and data processing
+- Visualization of selected items and their attributes
+- User interface for running optimizations
+- Alternative algorithms for comparison
 - Multi-objective optimization support
-- Visualization tools for solution analysis
+- Performance optimizations with result caching
 
 ## Project Structure
 
-- `backtracking_algorithm.py`: Core implementation
+- `backtracking_algorithm.py`: Core implementation with knapsack algorithm and main function
+- `items.json`: Data file containing all item definitions with their attributes
 - `memory-bank/`: Documentation and project context
 - `.cursorrules`: Project coding standards and patterns 
