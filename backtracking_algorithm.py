@@ -10,7 +10,7 @@ def main():
         items_list.append((key, items[key]['Price'], items[key]['Total Weight']))
     
     # Define test cases
-    cases = [9675, 14750, 16969, 23879, 28888, 34343, 43239, 52525, 69696]
+    cases = [9675, 14750, 16969, 23879, 28888, 34343, 43239, 52525, 69696, 75000, 85000, 95000, 100000, 110000, 120000, 130000, 140000, 150000, 160000, 170000, 180000, 190000, 200000]
     
     print(f"{'Budget':<10} {'Time (s)':<15} {'Price':<10} {'Weight':<15} {'Items':<10}")
     print("-" * 60)
@@ -58,7 +58,7 @@ class GameConstant:
     Attributes:
         MAX_ITEMS: Maximum number of items allowed in inventory
     """
-    MAX_ITEMS = 10  # Maximum number of items allowed in inventory
+    MAX_ITEMS = 6  # Maximum number of items allowed in inventory
 
 
 def knapsack(budget, items_list):
